@@ -1,4 +1,5 @@
-import typescript from 'rollup-plugin-typescript';
+import typescript from '@rollup/plugin-typescript';
+import jsx from 'acorn-jsx';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjsPlugin from 'rollup-plugin-commonjs';
 import postcss from 'rollup-plugin-postcss';
@@ -9,7 +10,7 @@ import nested from 'postcss-nested';
 import csspreset from 'postcss-preset-env';
 import cssnano from 'cssnano';
 import vuePlugin from 'rollup-plugin-vue';
-// import replace from '@rollup/plugin-replace';
+import replace from '@rollup/plugin-replace';
 import { terser } from 'rollup-plugin-terser';
 import url from "@rollup/plugin-url";
 // import less from "rollup-plugin-less";
@@ -35,7 +36,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             format:'esm',
             sourcemap: false,
             paths: {
-                '~ant-design-vue/es/style/themes/default.less':'/Users/ps/Library/Mobile Documents/com~apple~CloudDocs/DATA/ZKey.WebApp.PC/node_modules/ant-design-vue/es/style/themes/default.less'
+                'ant-design-vue/es/style/themes/default.less':path.resolve(__dirname,'./node_modules/ant-design-vue/es/style/themes/default.less')
             }
         });
     }else{
@@ -51,19 +52,33 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
         input: './src/index.js',
         treeshake: true,
         output,
+        acornInjectPlugins: [jsx()],
         plugins: [
+            // replace({
+            //     'ant-design-vue/es':'ant-design-vue/es',
+            //     'ant-design-vue':'ant-design-vue1'
+            // }),
+            
             alias({
                 entries: [
-                    { find: '~ant-design-vue', replacement: path.resolve(__dirname,'./node_modules/ant-design-vue') },
                     { find: '@/components', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/components') },
                     { find: '@/layouts', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/layouts') },
                 ]
             }),
+            // alias({
+            //     entries: [
+            //         { find: '~ant-design-vue', replacement: path.resolve(__dirname,'./node_modules/ant-design-vue') },
+            //     ],
+            //     customResolver:resolve({ extensions: ['.less'] }),
+            // }),
             url({
                 limit: 10 * 1024, // inline files < 10k, copy files > 10k
             }),
+            resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts','.vue','.png','.less','.tsx'] }),
+            commonjsPlugin({ include:'node_modules/**',extensions: ['.js','.jsx','.tsx'] }),
+            // , '**/*.jsx','*/*.jsx'
             typescript({
-                include:[ '*.ts+(|x)', '**/*.ts+(|x)', '**/*.jsx','*/*.jsx' ],
+                // include:[ '*.ts+(|x)', '**/*.ts+(|x)' ],
                 exclude:[
                     'src/**.png'
                 ],
@@ -75,14 +90,14 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 allowJs: true,
                 importHelpers: true,
                 removeComments:true,
-                jsx:"Preserve",
+                jsx:"preserve",
                 jsxFactory:"h"
             }),
             vuePlugin({
                 css: false,
                 // preprocessStyles:true,
                 defaultLang:{ script: 'ts' },
-                javascriptEnabled: true,
+                // javascriptEnabled: true,
                 // style:{
                 //     postcssOptions:{
                 //         javascriptEnabled: true,
@@ -101,8 +116,6 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 //     // }
                 // } 
             }),
-            commonjsPlugin({ extensions: ['.js'] }),
-            resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts','.vue','.png','.less'] }),
             // less({
             //     // include: ['node_modules/**.less','libs/**.less','src/**.less', 'test/**.less'],
             //     option:{

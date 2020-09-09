@@ -3,3 +3,57 @@
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
 /* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-pro-global-header-index-right {
+  margin-right: 8px;
+}
+.ant-pro-global-header-index-right.ant-pro-global-header-index-dark .ant-pro-global-header-index-action {
+  color: hsla(0, 0%, 100%, 0.85);
+}
+.ant-pro-global-header-index-right.ant-pro-global-header-index-dark .ant-pro-global-header-index-action:hover {
+  background: #1890ff;
+}
+.ant-pro-global-header-index-right .ant-pro-account-avatar .antd-pro-global-header-index-avatar {
+  margin: calc((64px - 24px) / 2) 0;
+  margin-right: 8px;
+  color: #1890ff;
+  vertical-align: top;
+  background: rgba(255, 255, 255, 0.85);
+}
+.ant-pro-global-header-index-right .menu .anticon {
+  margin-right: 8px;
+}
+.ant-pro-global-header-index-right .menu .ant-dropdown-menu-item {
+  min-width: 100px;
+}
+
+.ant-pro-drop-down[data-v-cd3c4c3e] .action {
+  margin-right: 8px;
+}
+.ant-pro-drop-down[data-v-cd3c4c3e] .ant-dropdown-menu-item {
+  min-width: 160px;
+}
+
+/* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
+/* stylelint-disable no-duplicate-selectors */
+/* stylelint-disable */
+/* stylelint-disable declaration-bang-space-before,no-duplicate-selectors,string-no-newline */
+.ant-pro-header-menu .anticon {
+  margin-right: 8px;
+}
+.ant-pro-header-menu .ant-dropdown-menu-item {
+  min-width: 160px;
+}
+.ant-pro-drop-down {
+  line-height: 64px;
+  vertical-align: top;
+  cursor: pointer;
+}
+.ant-pro-drop-down > i {
+  font-size: 16px !important;
+  -webkit-transform: none !important;
+          transform: none !important;
+}
+.ant-pro-drop-down > i svg {
+  position: relative;
+  top: -1px;
+}
