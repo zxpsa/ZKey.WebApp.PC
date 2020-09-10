@@ -36,7 +36,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             format:'esm',
             sourcemap: false,
             paths: {
-                'ant-design-vue/es/style/themes/default.less':path.resolve(__dirname,'./node_modules/ant-design-vue/es/style/themes/default.less')
+                // 'ant-design-vue/es/style/themes/default.less':path.resolve(__dirname,'./node_modules/ant-design-vue/es/style/themes/default.less')
             }
         });
     }else{
@@ -161,7 +161,8 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             'vue',
             'vue-router',
             'vuex',
-            'ant-design-vue'
+            'ant-design-vue',
+            '@ant-design-vue/pro-layout'
             // 'tslib'
         ]
     };

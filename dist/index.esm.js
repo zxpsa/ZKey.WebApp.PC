@@ -1,10 +1,39 @@
-import { GlobalFooter, SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout';
-import { i18nRender } from '@/locales';
-import 'vuex';
-import { SIDEBAR_TYPE, TOGGLE_MOBILE_TYPE } from '@/store/mutation-types';
-import defaultSettings from '@/config/defaultSettings';
+import 'vue';
+import ProLayout from '@ant-design-vue/pro-layout';
 import { Modal } from 'ant-design-vue';
+import { i18nRender } from '@/locales';
 import i18nMixin from '@/store/i18n-mixin';
+
+/**
+ * 项目默认配置项
+ * primaryColor - 默认主题色, 如果修改颜色不生效，请清理 localStorage
+ * navTheme - sidebar theme ['dark', 'light'] 两种主题
+ * colorWeak - 色盲模式
+ * layout - 整体布局方式 ['sidemenu', 'topmenu'] 两种布局
+ * fixedHeader - 固定 Header : boolean
+ * fixSiderbar - 固定左侧菜单栏 ： boolean
+ * contentWidth - 内容区布局： 流式 |  固定
+ *
+ * storageOptions: {} - Vue-ls 插件配置项 (localStorage/sessionStorage)
+ *
+ */
+
+var defaultSettings = {
+  navTheme: 'dark', // theme for nav menu
+  primaryColor: '#52C41A', // primary color of ant design
+  layout: 'sidemenu', // nav menu position: `sidemenu` or `topmenu`
+  contentWidth: 'Fluid', // layout of content: `Fluid` or `Fixed`, only works when layout is topmenu
+  fixedHeader: false, // sticky header
+  fixSiderbar: false, // sticky siderbar
+  colorWeak: false,
+  menu: {
+    locale: true
+  },
+  title: 'Ant Design Pro',
+  pwa: false,
+  iconfontUrl: '',
+  production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
+};
 
 //
 
@@ -236,7 +265,7 @@ __vue_render__._withStripped = true;
   /* style */
   const __vue_inject_styles__ = undefined;
   /* scoped */
-  const __vue_scope_id__ = "data-v-cd3c4c3e";
+  const __vue_scope_id__ = "data-v-2f149ef2";
   /* module identifier */
   const __vue_module_identifier__ = undefined;
   /* functional template */
@@ -416,196 +445,66 @@ __vue_render__$1._withStripped = true;
     undefined
   );
 
-//
-
-var script$2 = {
-  name: 'ProGlobalFooter',
-  components: {
-    GlobalFooter
-  }
+// import { i18nRender } from '@/locales'
+const props = {
+    /** 导航菜单 */
+    navMenus:{
+        type:Array,
+        default:()=>[]
+    }
 };
-
-/* script */
-const __vue_script__$2 = script$2;
-
-/* template */
-var __vue_render__$2 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("global-footer", {
-    staticClass: "footer custom-render",
-    scopedSlots: _vm._u([
-      {
-        key: "links",
-        fn: function() {
-          return [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://www.github.com/vueComponent/pro-layout",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("Pro Layout")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: {
-                  href:
-                    "https://www.github.com/vueComponent/ant-design-vue-pro",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("Github")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://www.github.com/sendya/",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("@Sendya")]
-            )
-          ]
-        },
-        proxy: true
-      },
-      {
-        key: "copyright",
-        fn: function() {
-          return [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://github.com/vueComponent",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("vueComponent")]
-            )
-          ]
-        },
-        proxy: true
-      }
-    ])
-  })
-};
-var __vue_staticRenderFns__$2 = [];
-__vue_render__$2._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__$2 = undefined;
-  /* scoped */
-  const __vue_scope_id__$2 = undefined;
-  /* module identifier */
-  const __vue_module_identifier__$2 = undefined;
-  /* functional template */
-  const __vue_is_functional_template__$2 = false;
-  /* style inject */
-  
-  /* style inject SSR */
-  
-  /* style inject shadow dom */
-  
-
-  
-  const __vue_component__$2 = /*#__PURE__*/normalizeComponent(
-    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
-    __vue_inject_styles__$2,
-    __vue_script__$2,
-    __vue_scope_id__$2,
-    __vue_is_functional_template__$2,
-    __vue_module_identifier__$2,
-    false,
-    undefined,
-    undefined,
-    undefined
-  );
-
-//
-
-var script$3 = {
-    name: 'BasicLayout',
+var index = {
+    name: 'ZkBasicLayout',
     components: {
-        SettingDrawer,
-        RightContent: __vue_component__$1,
-        GlobalFooter: __vue_component__$2
+        //   SettingDrawer,
+          RightContent: __vue_component__$1,
+        //   GlobalFooter,
+        ProLayout
     },
-    data() {
-        return {
-            // base
-            menus: [],
-            // 侧栏收起状态
-            collapsed: false,
-            title: defaultSettings.title,
-            settings: {
-                // 布局类型
-                layout: defaultSettings.layout, // 'sidemenu', 'topmenu'
-                // 定宽: true / 流式: false
-                contentWidth: defaultSettings.layout === 'sidemenu' ? false : defaultSettings.contentWidth === 'Fixed',
-                // 主题 'dark' | 'light'
-                theme: defaultSettings.navTheme,
-                // 主色调
-                primaryColor: defaultSettings.primaryColor,
-                fixedHeader: defaultSettings.fixedHeader,
-                fixSiderbar: defaultSettings.fixSiderbar,
-                colorWeak: defaultSettings.colorWeak,
+    props,
+    data () {
+      return {
+        // base
+        // 侧栏收起状态
+        collapsed: false,
+        title: defaultSettings.title,
+        settings: {
+          // 布局类型
+          layout: defaultSettings.layout, // 'sidemenu', 'topmenu'
+          // 定宽: true / 流式: falseFluid` or `Fixed
+          contentWidth:  'Fluid' ,
+          // 主题 'dark' | 'light'
+          theme: defaultSettings.navTheme,
+          // 主色调
+          primaryColor: defaultSettings.primaryColor,
+          fixedHeader: defaultSettings.fixedHeader,
+          fixSiderbar: defaultSettings.fixSiderbar,
+          colorWeak: defaultSettings.colorWeak,
+          hideHintAlert: false,
+          hideCopyButton: false
+        },
+        // 媒体查询
+        query: {},
 
-                hideHintAlert: false,
-                hideCopyButton: false
-            },
-            // 媒体查询
-            query: {},
-
-            // 是否手机模式
-            isMobile: false
-        }
+        // 是否手机模式
+        isMobile: false
+      }
     },
     computed: {
-        // ...mapState({
-        //   // 动态主路由
-        //   mainMenu: state => state.permission.addRouters
-        // })
-        mainMenu: [
-            {
-                key: '',
-                name: 'index',
-                path: '',
-                component: 'BasicLayout',
-                redirect: '/dashboard',
-                meta: {
-                    title: '首页'
-                },
-                children: [{
-                    name: 'index1',
-                    path: '/dashboard',
-                    // component: BasicLayout,
-                    redirect: '/dashboard',
-                    meta: {
-                        title: '首页1'
-                    },
-                }]
-            }
-        ]
+        // menus(){
+        //     return this.nav
+        // }
     },
     created() {
-        const routes = this.mainMenu.find(item => item.path === '/');
-        this.menus = (routes && routes.children) || [];
-        // 处理侧栏收起状态
-        this.$watch('collapsed', () => {
-            this.$store.commit(SIDEBAR_TYPE, this.collapsed);
-        });
-        this.$watch('isMobile', () => {
-            this.$store.commit(TOGGLE_MOBILE_TYPE, this.isMobile);
-        });
+        // const routes = this.mainMenu.find(item => item.path === '/')
+        // this.menus = (routes && routes.children) || []
+        // // 处理侧栏收起状态
+        // this.$watch('collapsed', () => {
+        //     this.$store.commit(SIDEBAR_TYPE, this.collapsed)
+        // })
+        // this.$watch('isMobile', () => {
+        //     this.$store.commit(TOGGLE_MOBILE_TYPE, this.isMobile)
+        // })
     },
     mounted() {
         const userAgent = navigator.userAgent;
@@ -620,12 +519,10 @@ var script$3 = {
 
         // first update color
         // TIPS: THEME COLOR HANDLER!! PLEASE CHECK THAT!!
-        if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') {
-            updateTheme(this.settings.primaryColor);
-        }
+        if (process.env.NODE_ENV !== 'production' || process.env.VUE_APP_PREVIEW === 'true') ;
     },
     methods: {
-        i18nRender,
+        //   i18nRender,
         handleMediaQuery(val) {
             this.query = val;
             if (this.isMobile && !val['screen-xs']) {
@@ -660,106 +557,43 @@ var script$3 = {
             }
         },
         logoRender() {
+            return '<a>13</a>'
             // return <LogoSvg />
-            return 'a'
         }
+    },
+
+    render() {
+        let props = {
+            title: this.title,
+            menus: this.navMenus,
+            collapsed: this.collapsed,
+            mediaQuery: this.query,
+            isMobile: this.isMobile,
+            handleCollapse: this.handleCollapse,
+            handleMediaQuery: this.handleMediaQuery
+        };
+        props = Object.assign(this.settings,props);
+        
+        // 设置默认右侧内容
+        if (!this.$slots['rightContentRender']) {
+            this.$slots.rightContentRender = (
+                <right-content top-menu={this.settings.layout === 'topmenu'} is-mobile={this.isMobile} theme={this.settings.theme} />
+            );
+        }
+        // 设置默认底部内容
+        if (!this.$slots['footerRender']) {
+            this.$slots.rightContentRender = (
+                <global-footer />
+            );
+        }
+        return (
+            <pro-layout {...{ props }} >
+                {/* <setting-drawer :settings="settings" @change="handleSettingChange" /> */}
+                {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
+                <router-view />
+            </pro-layout>
+        )
     }
 };
 
-/* script */
-const __vue_script__$3 = script$3;
-/* template */
-var __vue_render__$3 = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c(
-    "pro-layout",
-    _vm._b(
-      {
-        attrs: {
-          title: _vm.title,
-          menus: _vm.menus,
-          collapsed: _vm.collapsed,
-          mediaQuery: _vm.query,
-          isMobile: _vm.isMobile,
-          handleMediaQuery: _vm.handleMediaQuery,
-          handleCollapse: _vm.handleCollapse,
-          logo: _vm.logoRender,
-          i18nRender: _vm.i18nRender
-        },
-        scopedSlots: _vm._u([
-          {
-            key: "rightContentRender",
-            fn: function() {
-              return [
-                _c("right-content", {
-                  attrs: {
-                    "top-menu": _vm.settings.layout === "topmenu",
-                    "is-mobile": _vm.isMobile,
-                    theme: _vm.settings.theme
-                  }
-                })
-              ]
-            },
-            proxy: true
-          },
-          {
-            key: "footerRender",
-            fn: function() {
-              return [_c("global-footer")]
-            },
-            proxy: true
-          }
-        ])
-      },
-      "pro-layout",
-      _vm.settings,
-      false
-    ),
-    [
-      _c("setting-drawer", {
-        attrs: { settings: _vm.settings },
-        on: { change: _vm.handleSettingChange }
-      }),
-      _vm._v(" "),
-      _vm._v(" "),
-      _vm._v(" "),
-      _c("router-view")
-    ],
-    1
-  )
-};
-var __vue_staticRenderFns__$3 = [];
-__vue_render__$3._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__$3 = undefined;
-  /* scoped */
-  const __vue_scope_id__$3 = undefined;
-  /* module identifier */
-  const __vue_module_identifier__$3 = undefined;
-  /* functional template */
-  const __vue_is_functional_template__$3 = false;
-  /* style inject */
-  
-  /* style inject SSR */
-  
-  /* style inject shadow dom */
-  
-
-  
-  const __vue_component__$3 = /*#__PURE__*/normalizeComponent(
-    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
-    __vue_inject_styles__$3,
-    __vue_script__$3,
-    __vue_scope_id__$3,
-    __vue_is_functional_template__$3,
-    __vue_module_identifier__$3,
-    false,
-    undefined,
-    undefined,
-    undefined
-  );
-
-export { __vue_component__$3 as ZkBasicLayout };
+export { index as ZkBasicLayout };
