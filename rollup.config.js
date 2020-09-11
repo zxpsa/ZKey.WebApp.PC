@@ -17,6 +17,7 @@ import url from "@rollup/plugin-url";
 import styles from "rollup-plugin-styles";
 import path from 'path';
 import alias from '@rollup/plugin-alias';
+import json from '@rollup/plugin-json'
 
 /**
  * 
@@ -54,6 +55,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
         output,
         acornInjectPlugins: [jsx()],
         plugins: [
+            json(),
             // replace({
             //     'ant-design-vue/es':'ant-design-vue/es',
             //     'ant-design-vue':'ant-design-vue1'
