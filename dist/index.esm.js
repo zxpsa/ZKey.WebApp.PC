@@ -131,41 +131,7 @@ var __vue_render__ = function() {
       {
         key: "links",
         fn: function() {
-          return [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://www.github.com/vueComponent/pro-layout",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("Pro Layout")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: {
-                  href:
-                    "https://www.github.com/vueComponent/ant-design-vue-pro",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("Github")]
-            ),
-            _vm._v(" "),
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://www.github.com/sendya/",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("@Sendya")]
-            )
-          ]
+          return undefined
         },
         proxy: true
       },
@@ -173,15 +139,8 @@ var __vue_render__ = function() {
         key: "copyright",
         fn: function() {
           return [
-            _c(
-              "a",
-              {
-                attrs: {
-                  href: "https://github.com/vueComponent",
-                  target: "_blank"
-                }
-              },
-              [_vm._v("vueComponent")]
+            _vm._v(
+              "\n        © 2020 ChongQing ZhongShen Network Technology. All Rights Reserved. 重庆中肾网络科技有限公司 版权所有\n    "
             )
           ]
         },
@@ -241,6 +200,13 @@ const props = {
                 menus:[
                     {
                         label:'个人设置',
+                        icon:'setting',
+                        onClick(){
+                            console.log(123123);
+                        }
+                    },
+                    {
+                        label:'退出登录',
                         icon:'setting',
                         onClick(){
                             console.log(123123);
@@ -394,6 +360,22 @@ var index = {
                 [`ant-pro-global-header-index-${(this.isMobile || this.settings.layout !== 'topmenu') ? 'light' : this.settings.theme}`]: true
             };
             if (this.currentUser && this.currentUser.name) {
+
+                if (!this.currentUser.menus) this.currentUser.menus = []; 
+                const menus = this.currentUser.menus.map((item, index) => (
+                    <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
+                        { item.icon && <Icon type={ item.icon } />}
+                        { item.label }
+                    </Menu.Item>
+                ));
+                
+                if(menus.length>1){
+                    // 多项菜单最后一项添加间隔符
+                    const val = menus.pop();
+                    menus.push(<a-menu-divider/>);
+                    menus.push(val);
+                }
+
                 return (
                     <div class={ wrpCls }>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
@@ -402,23 +384,16 @@ var index = {
                                 <span>{ this.currentUser.name }</span>
                             </span>
                             { 
-                                this.currentUser.menus&& ( 
+                                menus.length>0&& ( 
                                     <template slot='overlay'>
                                         <Menu class="ant-pro-drop-down menu head-right-content-dropdown" selected-keys={[]}>
-                                            {
-                                                this.currentUser.menus.map((item, index) => (
-                                                    <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
-                                                        { item.icon && <Icon type={ item.icon } />}
-                                                        { item.label }
-                                                    </Menu.Item>
-                                                ))
-                                            }
+                                            { menus }
                                         </Menu>
                                     </template>
                                 )
                             }
                         </Dropdown>
-                        <Dropdown placement="bottomRight">
+                        <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class='ant-pro-drop-down'>
                                 <Icon type="global" title='图标'/>
                             </span>
@@ -468,8 +443,6 @@ var index = {
             handleMediaQuery: this.handleMediaQuery
         };
         props = Object.assign(this.settings, props);
-        // 设置默认底部内容
-        if (!this.$slots['footerRender']) ;
         return (
             <pro-layout {...{ props }} >
                 {/* <setting-drawer :settings="settings" @change="handleSettingChange" /> */}

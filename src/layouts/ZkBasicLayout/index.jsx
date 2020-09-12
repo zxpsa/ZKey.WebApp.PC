@@ -6,6 +6,8 @@ import GlobalFooter from '@/components/GlobalFooter';
 import { Icon, Menu, Dropdown } from 'ant-design-vue';
 
 import './index.less';
+import '@/components/SelectLang/index.less';
+
 
 // import { i18nRender } from '@/locales'
 const props = {
@@ -26,6 +28,13 @@ const props = {
                 menus:[
                     {
                         label:'个人设置',
+                        icon:'setting',
+                        onClick(){
+                            console.log(123123);
+                        }
+                    },
+                    {
+                        label:'退出登录',
                         icon:'setting',
                         onClick(){
                             console.log(123123);
@@ -181,6 +190,22 @@ export default {
                 [`ant-pro-global-header-index-${(this.isMobile || this.settings.layout !== 'topmenu') ? 'light' : this.settings.theme}`]: true
             }
             if (this.currentUser && this.currentUser.name) {
+
+                if (!this.currentUser.menus) this.currentUser.menus = []; 
+                const menus = this.currentUser.menus.map((item, index) => (
+                    <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
+                        { item.icon && <Icon type={ item.icon } />}
+                        { item.label }
+                    </Menu.Item>
+                ));
+                
+                if(menus.length>1){
+                    // 多项菜单最后一项添加间隔符
+                    const val = menus.pop();
+                    menus.push(<a-menu-divider/>);
+                    menus.push(val);
+                }
+
                 return (
                     <div class={ wrpCls }>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
@@ -189,23 +214,16 @@ export default {
                                 <span>{ this.currentUser.name }</span>
                             </span>
                             { 
-                                this.currentUser.menus&& ( 
+                                menus.length>0&& ( 
                                     <template slot='overlay'>
                                         <Menu class="ant-pro-drop-down menu head-right-content-dropdown" selected-keys={[]}>
-                                            {
-                                                this.currentUser.menus.map((item, index) => (
-                                                    <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
-                                                        { item.icon && <Icon type={ item.icon } />}
-                                                        { item.label }
-                                                    </Menu.Item>
-                                                ))
-                                            }
+                                            { menus }
                                         </Menu>
                                     </template>
                                 )
                             }
                         </Dropdown>
-                        <Dropdown placement="bottomRight">
+                        <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class='ant-pro-drop-down'>
                                 <Icon type="global" title='图标'/>
                             </span>
@@ -255,12 +273,6 @@ export default {
             handleMediaQuery: this.handleMediaQuery
         }
         props = Object.assign(this.settings, props);
-        // 设置默认底部内容
-        if (!this.$slots['footerRender']) {
-            // this.$slots.rightContentRender = (
-            //     <global-footer />
-            // )
-        }
         return (
             <pro-layout {...{ props }} >
                 {/* <setting-drawer :settings="settings" @change="handleSettingChange" /> */}
