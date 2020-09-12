@@ -1,6 +1,5 @@
-import 'vue';
-import ProLayout, { GlobalFooter } from '@ant-design-vue/pro-layout';
-import { Icon, Menu, Dropdown } from 'ant-design-vue';
+import ProLayout, { SettingDrawer, GlobalFooter } from '@ant-design-vue/pro-layout';
+import { Icon, Menu, Dropdown, Select } from 'ant-design-vue';
 
 /**
  * 项目默认配置项
@@ -33,155 +32,6 @@ var defaultSettings = {
   production: process.env.NODE_ENV === 'production' && process.env.VUE_APP_PREVIEW !== 'true'
 };
 
-//
-
-var script = {
-  name: 'ProGlobalFooter',
-  components: {
-    GlobalFooter
-  }
-};
-
-function normalizeComponent(template, style, script, scopeId, isFunctionalTemplate, moduleIdentifier /* server only */, shadowMode, createInjector, createInjectorSSR, createInjectorShadow) {
-    if (typeof shadowMode !== 'boolean') {
-        createInjectorSSR = createInjector;
-        createInjector = shadowMode;
-        shadowMode = false;
-    }
-    // Vue.extend constructor export interop.
-    const options = typeof script === 'function' ? script.options : script;
-    // render functions
-    if (template && template.render) {
-        options.render = template.render;
-        options.staticRenderFns = template.staticRenderFns;
-        options._compiled = true;
-        // functional template
-        if (isFunctionalTemplate) {
-            options.functional = true;
-        }
-    }
-    // scopedId
-    if (scopeId) {
-        options._scopeId = scopeId;
-    }
-    let hook;
-    if (moduleIdentifier) {
-        // server build
-        hook = function (context) {
-            // 2.3 injection
-            context =
-                context || // cached call
-                    (this.$vnode && this.$vnode.ssrContext) || // stateful
-                    (this.parent && this.parent.$vnode && this.parent.$vnode.ssrContext); // functional
-            // 2.2 with runInNewContext: true
-            if (!context && typeof __VUE_SSR_CONTEXT__ !== 'undefined') {
-                context = __VUE_SSR_CONTEXT__;
-            }
-            // inject component styles
-            if (style) {
-                style.call(this, createInjectorSSR(context));
-            }
-            // register component module identifier for async chunk inference
-            if (context && context._registeredComponents) {
-                context._registeredComponents.add(moduleIdentifier);
-            }
-        };
-        // used by ssr in case component is cached and beforeCreate
-        // never gets called
-        options._ssrRegister = hook;
-    }
-    else if (style) {
-        hook = shadowMode
-            ? function (context) {
-                style.call(this, createInjectorShadow(context, this.$root.$options.shadowRoot));
-            }
-            : function (context) {
-                style.call(this, createInjector(context));
-            };
-    }
-    if (hook) {
-        if (options.functional) {
-            // register for functional component in vue file
-            const originalRender = options.render;
-            options.render = function renderWithStyleInjection(h, context) {
-                hook.call(context);
-                return originalRender(h, context);
-            };
-        }
-        else {
-            // inject component registration as beforeCreate hook
-            const existing = options.beforeCreate;
-            options.beforeCreate = existing ? [].concat(existing, hook) : [hook];
-        }
-    }
-    return script;
-}
-
-/* script */
-const __vue_script__ = script;
-
-/* template */
-var __vue_render__ = function() {
-  var _vm = this;
-  var _h = _vm.$createElement;
-  var _c = _vm._self._c || _h;
-  return _c("global-footer", {
-    staticClass: "footer custom-render",
-    scopedSlots: _vm._u([
-      {
-        key: "links",
-        fn: function() {
-          return undefined
-        },
-        proxy: true
-      },
-      {
-        key: "copyright",
-        fn: function() {
-          return [
-            _vm._v(
-              "\n        © 2020 ChongQing ZhongShen Network Technology. All Rights Reserved. 重庆中肾网络科技有限公司 版权所有\n    "
-            )
-          ]
-        },
-        proxy: true
-      }
-    ])
-  })
-};
-var __vue_staticRenderFns__ = [];
-__vue_render__._withStripped = true;
-
-  /* style */
-  const __vue_inject_styles__ = undefined;
-  /* scoped */
-  const __vue_scope_id__ = undefined;
-  /* module identifier */
-  const __vue_module_identifier__ = undefined;
-  /* functional template */
-  const __vue_is_functional_template__ = false;
-  /* style inject */
-  
-  /* style inject SSR */
-  
-  /* style inject shadow dom */
-  
-
-  
-  const __vue_component__ = /*#__PURE__*/normalizeComponent(
-    { render: __vue_render__, staticRenderFns: __vue_staticRenderFns__ },
-    __vue_inject_styles__,
-    __vue_script__,
-    __vue_scope_id__,
-    __vue_is_functional_template__,
-    __vue_module_identifier__,
-    false,
-    undefined,
-    undefined,
-    undefined
-  );
-
-// import { i18nRender } from '@/locales'
 const props = {
     /** 导航菜单 */
     navMenus: {
@@ -191,62 +41,61 @@ const props = {
     /** 当前用户信息和操作菜单 */
     currentUser: {
         type: Object,
+        required:true
         // name:'',
         // menus:[]
-        default: () => {
-            return {
-                name: '测试',
-                imgUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-                menus:[
-                    {
-                        label:'个人设置',
-                        icon:'setting',
-                        onClick(){
-                            console.log(123123);
-                        }
-                    },
-                    {
-                        label:'退出登录',
-                        icon:'setting',
-                        onClick(){
-                            console.log(123123);
-                        }
-                    }
-                ]
-            }
-        }
+        // default: () => {
+        //     return {
+        //         name: '测试',
+        //         imgUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        //         menus: [
+        //             {
+        //                 label: '个人设置',
+        //                 icon: 'setting',
+        //                 onClick() {
+        //                     console.log(123123);
+        //                 }
+        //             },
+        //             {
+        //                 label: '退出登录',
+        //                 icon: 'setting',
+        //                 onClick() {
+        //                     console.log(123123);
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
     },
     /** 待选语言 */
     langs: {
-        type:Array,
-        default:()=>[
-            {
-                label:'简体中文',
-                icon:'🇨🇳',
-                onClick(){
-                    console.log('简体中文');
-                }
-            },
-            {
-                label:'English',
-                icon:'🇺🇸',
-                onClick(){
-                    console.log('English');
-                }
-            }
+        type: Array,
+        default: () => [
+            // {
+            //     label: '简体中文',
+            //     icon: '🇨🇳',
+            //     onClick() {
+            //         console.log('简体中文');
+            //     }
+            // },
+            // {
+            //     label: 'English',
+            //     icon: '🇺🇸',
+            //     onClick() {
+            //         console.log('English');
+            //     }
+            // }
         ]
+    },
+    /** 版权声明 */
+    copyright: {
+        type: String
     }
 };
 var index = {
     name: 'ZkBasicLayout',
     components: {
-        //   SettingDrawer,
-        //   RightContent,
-        GlobalFooter: __vue_component__,
-        ProLayout,
-        Icon, 
-        Menu, 
-        Dropdown
+        SettingDrawer, GlobalFooter, ProLayout, Icon, Menu, Dropdown
     },
     props,
     data() {
@@ -278,11 +127,6 @@ var index = {
             /** 当前选中的语言 */
             currentLang: null
         }
-    },
-    computed: {
-        // menus(){
-        //     return this.nav
-        // }
     },
     created() {
         if (this.langs) {
@@ -361,33 +205,33 @@ var index = {
             };
             if (this.currentUser && this.currentUser.name) {
 
-                if (!this.currentUser.menus) this.currentUser.menus = []; 
+                if (!this.currentUser.menus) this.currentUser.menus = [];
                 const menus = this.currentUser.menus.map((item, index) => (
                     <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
-                        { item.icon && <Icon type={ item.icon } />}
-                        { item.label }
+                        { item.icon && <Icon type={item.icon} />}
+                        { item.label}
                     </Menu.Item>
                 ));
-                
-                if(menus.length>1){
+
+                if (menus.length > 1) {
                     // 多项菜单最后一项添加间隔符
                     const val = menus.pop();
-                    menus.push(<a-menu-divider/>);
+                    menus.push(<a-menu-divider />);
                     menus.push(val);
                 }
 
                 return (
-                    <div class={ wrpCls }>
+                    <div class={wrpCls}>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class="ant-pro-account-avatar">
                                 <a-avatar size="small" src={this.currentUser.imgUrl} class="antd-pro-global-header-index-avatar" />
-                                <span>{ this.currentUser.name }</span>
+                                <span>{this.currentUser.name}</span>
                             </span>
-                            { 
-                                menus.length>0&& ( 
+                            {
+                                menus.length > 0 && (
                                     <template slot='overlay'>
                                         <Menu class="ant-pro-drop-down menu head-right-content-dropdown" selected-keys={[]}>
-                                            { menus }
+                                            {menus}
                                         </Menu>
                                     </template>
                                 )
@@ -395,23 +239,23 @@ var index = {
                         </Dropdown>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class='ant-pro-drop-down'>
-                                <Icon type="global" title='图标'/>
+                                <Icon type="global" title='图标' />
                             </span>
                             {
-                                this.langs&&(
+                                this.langs && (
                                     <template slot='overlay'>
-                                        <Menu class={['menu', 'ant-pro-header-menu']} selectedKeys={ [this.currentLang] }>
-                                            {this.langs.map(item => (
-                                            <Menu.Item key={item.label} onClick={()=>{
-                                                this.currentLang = item.label;
-                                                item.onClick && item.onClick();
-                                            }}>
-                                                <span role="img" aria-label={item.label}>
-                                                {item.icon}
-                                                </span>{' '}
-                                                {item.label}
-                                            </Menu.Item>
-                                            ))}
+                                        <Menu class={ ['menu', 'ant-pro-header-menu'] } selectedKeys={[this.currentLang]}>
+                                            { this.langs.map(item => (
+                                                <Menu.Item key={item.label} onClick={() => {
+                                                    this.currentLang = item.label;
+                                                    item.onClick && item.onClick();
+                                                }}>
+                                                    <span role="img" aria-label={item.label}>
+                                                        {item.icon}
+                                                    </span>{' '}
+                                                    {item.label}
+                                                </Menu.Item>
+                                            )) }
                                         </Menu>
                                     </template>
                                 )
@@ -421,7 +265,7 @@ var index = {
                 )
             } else {
                 return (
-                    <div class={ wrpCls }>
+                    <div class={wrpCls}>
                         <span>
                             <a-spin size="small" style={{ marginLeft: '8px', marginRight: '8px' }} />
                         </span>
@@ -443,21 +287,94 @@ var index = {
             handleMediaQuery: this.handleMediaQuery
         };
         props = Object.assign(this.settings, props);
+        // @change="handleSettingChange" 
         return (
             <pro-layout {...{ props }} >
-                {/* <setting-drawer :settings="settings" @change="handleSettingChange" /> */}
-                {this.$slots['rightContentRender']||(<template slot='rightContentRender'>{this.renderDefRightContentRender()}</template>)}
+                <SettingDrawer settings={this.settings} />
+                {this.$slots['rightContentRender'] || (<template slot='rightContentRender'>{this.renderDefRightContentRender()}</template>)}
                 {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
                 <router-view />
-                {/* <template slot="footerRender"><GlobalFooter /></template> */}
-                <template slot="footerRender">
-                    <global-footer />
-                </template>
+                {this.$slots['footerRender'] || (
+                    <template slot="footerRender">
+                        <GlobalFooter>
+                            <template slot="links">
+                                <span></span>
+                            </template>
+                            <template slot="copyright"><span>{this.copyright}</span></template>
+                        </GlobalFooter>
+                    </template>
+                )}
             </pro-layout>
         )
-    },
-
-
+    }
 };
 
-export { index as ZkBasicLayout };
+var ZkSelect = {
+    name: 'ZkSelect',
+    components:{
+        Select
+    },
+    props: {
+        value: {
+            type: [String, Number, Boolean],
+            default: null
+        },
+
+        options: {
+            type: [Array, Function],
+            default: () => []
+        },
+
+        disabled: {
+            type: Boolean,
+            default: false
+        },
+
+        placeholder: {
+            type: [String, Object]
+        }
+    },
+    data() {
+        return {
+            optionsData: []
+        }
+    },
+    watch: {
+        options(newVal, oldVal) {
+            console.log('options变化');
+            if (newVal instanceof Array) {
+                console.log('options变化');
+            }
+        }
+    },
+    created() {
+        if (this.options instanceof Array) {
+            this.optionsData = this.options;
+        } else {
+            this.options().then((result) => {
+                this.optionsData = result;
+            });
+        }
+    },
+    render() {
+        const props = Object.keys(this.$props).reduce((res, key) => {
+            res[key] = this[key];
+            return res;
+        }, {});
+        delete props.option;
+        props.options = this.optionsData;
+        return (
+            <a-select {...{ props }} onChange={(value, option) => this.$emit('input', value, option)}></a-select>
+        )
+    },
+    methods: {
+        refresh() {
+            if (this.options instanceof Array) return Promise.resolve();
+            return this.options().then((res) => {
+                this.optionsData = res;
+            });
+        }
+    }
+};
+
+export { index as ZkBasicLayout, ZkSelect };

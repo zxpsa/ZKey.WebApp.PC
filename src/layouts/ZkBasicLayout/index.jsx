@@ -1,15 +1,12 @@
 import { SettingDrawer, updateTheme } from '@ant-design-vue/pro-layout'
 import ProLayout from '@ant-design-vue/pro-layout'
 import defaultSettings from './defaultSettings';
-// import RightContent from '@/components/GlobalHeader/RightContent.vue';
-import GlobalFooter from '@/components/GlobalFooter';
+import { GlobalFooter } from '@ant-design-vue/pro-layout'
 import { Icon, Menu, Dropdown } from 'ant-design-vue';
 
 import './index.less';
 import '@/components/SelectLang/index.less';
 
-
-// import { i18nRender } from '@/locales'
 const props = {
     /** 导航菜单 */
     navMenus: {
@@ -19,62 +16,61 @@ const props = {
     /** 当前用户信息和操作菜单 */
     currentUser: {
         type: Object,
+        required:true
         // name:'',
         // menus:[]
-        default: () => {
-            return {
-                name: '测试',
-                imgUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-                menus:[
-                    {
-                        label:'个人设置',
-                        icon:'setting',
-                        onClick(){
-                            console.log(123123);
-                        }
-                    },
-                    {
-                        label:'退出登录',
-                        icon:'setting',
-                        onClick(){
-                            console.log(123123);
-                        }
-                    }
-                ]
-            }
-        }
+        // default: () => {
+        //     return {
+        //         name: '测试',
+        //         imgUrl: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
+        //         menus: [
+        //             {
+        //                 label: '个人设置',
+        //                 icon: 'setting',
+        //                 onClick() {
+        //                     console.log(123123);
+        //                 }
+        //             },
+        //             {
+        //                 label: '退出登录',
+        //                 icon: 'setting',
+        //                 onClick() {
+        //                     console.log(123123);
+        //                 }
+        //             }
+        //         ]
+        //     }
+        // }
     },
     /** 待选语言 */
     langs: {
-        type:Array,
-        default:()=>[
-            {
-                label:'简体中文',
-                icon:'🇨🇳',
-                onClick(){
-                    console.log('简体中文');
-                }
-            },
-            {
-                label:'English',
-                icon:'🇺🇸',
-                onClick(){
-                    console.log('English');
-                }
-            }
+        type: Array,
+        default: () => [
+            // {
+            //     label: '简体中文',
+            //     icon: '🇨🇳',
+            //     onClick() {
+            //         console.log('简体中文');
+            //     }
+            // },
+            // {
+            //     label: 'English',
+            //     icon: '🇺🇸',
+            //     onClick() {
+            //         console.log('English');
+            //     }
+            // }
         ]
+    },
+    /** 版权声明 */
+    copyright: {
+        type: String
     }
 }
 export default {
     name: 'ZkBasicLayout',
     components: {
-        //   SettingDrawer,
-        //   RightContent,
-        GlobalFooter,
-        ProLayout,
-        Icon, 
-        Menu, 
-        Dropdown
+        SettingDrawer, GlobalFooter, ProLayout, Icon, Menu, Dropdown
     },
     props,
     data() {
@@ -106,11 +102,6 @@ export default {
             /** 当前选中的语言 */
             currentLang: null
         }
-    },
-    computed: {
-        // menus(){
-        //     return this.nav
-        // }
     },
     created() {
         if (this.langs) {
@@ -191,33 +182,33 @@ export default {
             }
             if (this.currentUser && this.currentUser.name) {
 
-                if (!this.currentUser.menus) this.currentUser.menus = []; 
+                if (!this.currentUser.menus) this.currentUser.menus = [];
                 const menus = this.currentUser.menus.map((item, index) => (
                     <Menu.Item key={index} onClick={() => item.onClick && item.onClick()}>
-                        { item.icon && <Icon type={ item.icon } />}
-                        { item.label }
+                        { item.icon && <Icon type={item.icon} />}
+                        { item.label}
                     </Menu.Item>
                 ));
-                
-                if(menus.length>1){
+
+                if (menus.length > 1) {
                     // 多项菜单最后一项添加间隔符
                     const val = menus.pop();
-                    menus.push(<a-menu-divider/>);
+                    menus.push(<a-menu-divider />);
                     menus.push(val);
                 }
 
                 return (
-                    <div class={ wrpCls }>
+                    <div class={wrpCls}>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class="ant-pro-account-avatar">
                                 <a-avatar size="small" src={this.currentUser.imgUrl} class="antd-pro-global-header-index-avatar" />
-                                <span>{ this.currentUser.name }</span>
+                                <span>{this.currentUser.name}</span>
                             </span>
-                            { 
-                                menus.length>0&& ( 
+                            {
+                                menus.length > 0 && (
                                     <template slot='overlay'>
                                         <Menu class="ant-pro-drop-down menu head-right-content-dropdown" selected-keys={[]}>
-                                            { menus }
+                                            {menus}
                                         </Menu>
                                     </template>
                                 )
@@ -225,23 +216,23 @@ export default {
                         </Dropdown>
                         <Dropdown placement="bottomRight" class="ant-pro-global-header-index-action">
                             <span class='ant-pro-drop-down'>
-                                <Icon type="global" title='图标'/>
+                                <Icon type="global" title='图标' />
                             </span>
                             {
-                                this.langs&&(
+                                this.langs && (
                                     <template slot='overlay'>
-                                        <Menu class={['menu', 'ant-pro-header-menu']} selectedKeys={ [this.currentLang] }>
-                                            {this.langs.map(item => (
-                                            <Menu.Item key={item.label} onClick={()=>{
-                                                this.currentLang = item.label;
-                                                item.onClick && item.onClick();
-                                            }}>
-                                                <span role="img" aria-label={item.label}>
-                                                {item.icon}
-                                                </span>{' '}
-                                                {item.label}
-                                            </Menu.Item>
-                                            ))}
+                                        <Menu class={ ['menu', 'ant-pro-header-menu'] } selectedKeys={[this.currentLang]}>
+                                            { this.langs.map(item => (
+                                                <Menu.Item key={item.label} onClick={() => {
+                                                    this.currentLang = item.label;
+                                                    item.onClick && item.onClick();
+                                                }}>
+                                                    <span role="img" aria-label={item.label}>
+                                                        {item.icon}
+                                                    </span>{' '}
+                                                    {item.label}
+                                                </Menu.Item>
+                                            )) }
                                         </Menu>
                                     </template>
                                 )
@@ -251,7 +242,7 @@ export default {
                 )
             } else {
                 return (
-                    <div class={ wrpCls }>
+                    <div class={wrpCls}>
                         <span>
                             <a-spin size="small" style={{ marginLeft: '8px', marginRight: '8px' }} />
                         </span>
@@ -273,19 +264,24 @@ export default {
             handleMediaQuery: this.handleMediaQuery
         }
         props = Object.assign(this.settings, props);
+        // @change="handleSettingChange" 
         return (
             <pro-layout {...{ props }} >
-                {/* <setting-drawer :settings="settings" @change="handleSettingChange" /> */}
-                {this.$slots['rightContentRender']||(<template slot='rightContentRender'>{this.renderDefRightContentRender()}</template>)}
+                <SettingDrawer settings={this.settings} />
+                {this.$slots['rightContentRender'] || (<template slot='rightContentRender'>{this.renderDefRightContentRender()}</template>)}
                 {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
                 <router-view />
-                {/* <template slot="footerRender"><GlobalFooter /></template> */}
-                <template slot="footerRender">
-                    <global-footer />
-                </template>
+                {this.$slots['footerRender'] || (
+                    <template slot="footerRender">
+                        <GlobalFooter>
+                            <template slot="links">
+                                <span></span>
+                            </template>
+                            <template slot="copyright"><span>{this.copyright}</span></template>
+                        </GlobalFooter>
+                    </template>
+                )}
             </pro-layout>
         )
-    },
-
-
+    }
 }

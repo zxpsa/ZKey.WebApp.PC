@@ -50,7 +50,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
         });
     }
     return {
-        input: './src/index.js',
+        input: './src/index.ts',
         treeshake: true,
         output,
         acornInjectPlugins: [jsx()],
@@ -76,25 +76,29 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             url({
                 limit: 10 * 1024, // inline files < 10k, copy files > 10k
             }),
-            resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts','.vue','.png','.less','.tsx'] }),
-            commonjsPlugin({ include:'node_modules/**',extensions: ['.js','.jsx','.tsx'] }),
             // , '**/*.jsx','*/*.jsx'
             typescript({
                 // include:[ '*.ts+(|x)', '**/*.ts+(|x)' ],
                 exclude:[
                     'src/**.png'
                 ],
-                noImplicitAny: true,
+                noImplicitAny: false,
                 tsconfig: false,
                 // experimentalDecorators: true,
                 lib: ["es5", "es6", "dom", "es7", "es2015.promise"],
                 target,
-                allowJs: true,
+                allowJs: false,
                 importHelpers: true,
                 removeComments:true,
                 jsx:"preserve",
-                jsxFactory:"h"
+                jsxFactory:"h",
+                module: "esnext",
+                preserveConstEnums:false,
+                moduleResolution:'node',
+                // outDir: path.resolve(__dirname,'./jsSrc'),
             }),
+            resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts','.vue','.png','.less','.tsx'] }),
+            commonjsPlugin({ include:'node_modules/**',extensions: ['.js','.jsx','.tsx'] }),
             vuePlugin({
                 css: false,
                 // preprocessStyles:true,
