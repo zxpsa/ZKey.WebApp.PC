@@ -49,10 +49,9 @@
 </template>
 
 <script>
-import { STable } from "@/components";
-import { InputTypeEnum } from './enum';
-import moment from 'moment';
-import ZkSelect from './ZkSelect';
+import { STable } from "./../edit/index";
+import { InputTypeEnum } from './../enum/enum';
+import ZkSelect from './ZkSelect.jsx';
 export default {
     name: "ZkList",
     components: {

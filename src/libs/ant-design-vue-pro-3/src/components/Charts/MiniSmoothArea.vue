@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import "./smooth.area.less";
 export default {
   name: 'MiniSmoothArea',
   props: {
@@ -36,5 +37,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  @import "smooth.area.less";
+  @import "./smooth.area.less";
 </style>
