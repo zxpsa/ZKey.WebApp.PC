@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.esm.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "rollup --config rollup.config1.js -w",
     "dev": "rollup --config rollup.config.js -w",
     "build": "rollup --config rollup.config.js",
     "gulp:build": "gulp build"
@@ -17,9 +17,10 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.3.3",
-    "@rollup/plugin-typescript": "^5.0.2",
+    "@rollup/plugin-typescript": "^6.0.0",
     "@rollup/plugin-url": "^5.0.1",
     "@types/node": "^14.10.1",
+    "@types/vue": "^2.0.0",
     "acorn-jsx": "^5.3.1",
     "ant-design-vue": "^1.6.5",
     "chai": "^4.2.0",
@@ -41,7 +42,7 @@
     "rollup-plugin-vue": "^5.0.0",
     "tslib": "^1.9.3",
     "typedoc": "^0.15.0",
-    "typescript": "^3.4.1",
+    "typescript": "^4.0.2",
     "viser-vue": "^2.4.8",
     "vue": "^2.6.12",
     "vue-template-compiler": "^2.6.10"

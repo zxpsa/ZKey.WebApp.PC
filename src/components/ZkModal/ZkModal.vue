@@ -1,4 +1,4 @@
-<style lang="scss">
+<style lang="postcss">
     .zk-modal{
         .ant-drawer-body{
             height: calc( 100% - 55px);

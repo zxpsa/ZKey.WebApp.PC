@@ -1,5 +1,5 @@
 import ProLayout, { SettingDrawer, GlobalFooter } from '@ant-design-vue/pro-layout';
-import { Icon, Menu, Dropdown, Select, Table } from 'ant-design-vue';
+import { Icon, Menu, Dropdown, Select, Table, Col, Row } from 'ant-design-vue';
 
 /**
  * 项目默认配置项
@@ -2270,4 +2270,307 @@ __vue_render__$1._withStripped = true;
     undefined
   );
 
-export { InputTypeEnum, index as ZkBasicLayout, __vue_component__$1 as ZkBtn, __vue_component__ as ZkList, ZkSelect };
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+// import Modal from 'ant-design-vue/es/modal/Modal';
+const sizeMaping = {
+    xs: 320,
+    sm: 480,
+    md: 640,
+    lg: 800,
+    xl: 960,
+    xxl: 1280
+};
+var script$2 = {
+    name: 'ZkModal',
+    props: {
+        title: {
+            type: String
+        },
+        size: {
+            type: String,
+            default: () => 'md'
+        },
+        visible: {
+            type: Boolean,
+            default: () => false
+        },
+        /** 传输中遮罩层 */
+        loading:{
+            type: Boolean,
+            default: () => false
+        },
+        okText:{
+            type:String,
+            default:()=>'确定'
+        }
+    },
+    render() {
+        const width = sizeMaping[this.size];
+        const props = Object.assign({}, {
+            visible: this.visible,
+            title: this.title,
+            width: width
+        });
+        const handleOk = ()=>{
+            // 在传输中则阻止 ok 事件触发
+            if (this.loading)return;
+            this.$emit('ok');
+        };
+        const btns = [];
+        const hasOk = this.$listeners.ok ? true : false;
+        btns.push(<a-button style={{ marginRight: '8px' }} onClick={() => this.$emit('cancel')}>{hasOk ? '取消' : '关闭'}</a-button>);
+        if (hasOk) {
+            btns.push(<a-button type="primary" onClick={ handleOk }>{ this.okText }</a-button>);
+        }
+        if (props.width >= sizeMaping['lg']) {
+            //   <a-spin spinning={this.loading}>
+            //             {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
+            //         </a-spin>
+            props.headerStyle = {
+                //  height:'100%',
+            };
+            // props.bodyStyle={
+            //     // height:'calc( 100% - 55px)',
+            //     // overflow: 'auto'
+            // }
+            return (
+                <a-drawer {...{ props }} wrapClassName="zk-modal" onClose={() => this.$emit('cancel')}>
+                    {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
+                    {
+                        this.$slots.footer ? this.$slots.footer : (
+                                <div style={{
+                                    position: 'absolute',
+                                    bottom: 0,
+                                    width: '100%',
+                                    borderTop: '1px solid #e8e8e8',
+                                    padding: '10px 16px',
+                                    textAlign: 'center',
+                                    left: 0,
+                                    background: '#fff',
+                                    borderRadius: '0 0 4px 4px',
+                                    zIndex:1000
+                                }}>
+                                    {btns}
+                                </div>
+                        )
+                    }
+                </a-drawer>
+            )
+        } else {
+            return (
+                <a-modal {...{ props }} onCancel={() => this.$emit('cancel')} okText="确定">
+                    <a-spin spinning={this.loading}>
+                        {Object.keys(this.$slots).map(name => (<template slot={name}>{this.$slots[name]}</template>))}
+                    </a-spin>
+                    {
+                        this.$slots.footer ? this.$slots.footer : (
+                            <template slot="footer">
+                                <div style="text-align: center;">
+                                    {btns}
+                                </div>
+                            </template>
+                        )
+                    }
+                </a-modal>
+            );
+        }
+    }
+};
+
+/* script */
+const __vue_script__$2 = script$2;
+/* template */
+
+  /* style */
+  const __vue_inject_styles__$2 = undefined;
+  /* scoped */
+  const __vue_scope_id__$2 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$2 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$2 = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$2 = /*#__PURE__*/normalizeComponent(
+    {},
+    __vue_inject_styles__$2,
+    __vue_script__$2,
+    __vue_scope_id__$2,
+    __vue_is_functional_template__$2,
+    __vue_module_identifier__$2,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+//
+
+const Item = {
+  name: 'DetailListItem',
+  props: {
+    term: {
+      type: String,
+      default: '',
+      required: false
+    },
+    labelCol:{
+      type: Object,
+      default:()=> ({ span:5 }),
+      required: false
+    },
+    contentCol:{
+      type: Object,
+      default:function(){
+       return {
+         span:24-this.labelCol.span
+       }
+      },
+      required: false
+    }
+  },
+  inject: {
+    col: {
+      type: Number
+    }
+  },
+  render () {
+    let termStyleObj = {};
+    if (this.labelCol.span==0) {
+      termStyleObj.display="none";
+    }
+    return (
+      <Col {...{ props: responsive[this.col] }}>
+        <Row>
+          <Col class="term" {...{ 
+            props: this.labelCol,
+            style:termStyleObj
+          }}>{this.$props.term}</Col>
+          <Col class="content-tag" {...{ props: this.contentCol }}>{this.$slots.default}</Col>
+        </Row>
+      </Col>
+    )
+  }
+};
+        // <Row>
+
+const responsive = {
+  1: { xs: 24 },
+  2: { xs: 24, sm: 12 },
+  3: { xs: 24, sm: 12, md: 8 },
+  4: { xs: 24, sm: 12, md: 6 }
+};
+
+var script$3 = {
+  name: 'DetailList',
+  Item: Item,
+  components: {
+    Col,
+    Row
+  },
+  props: {
+    title: {
+      type: String,
+      default: '',
+      required: false
+    },
+    col: {
+      type: Number,
+      required: false,
+      default: 3
+    },
+    size: {
+      type: String,
+      required: false,
+      default: 'large'
+    },
+    layout: {
+      type: String,
+      required: false,
+      default: 'horizontal'
+    }
+  },
+  provide () {
+    return {
+      col: this.col > 4 ? 4 : this.col
+    }
+  }
+};
+
+/* script */
+const __vue_script__$3 = script$3;
+/* template */
+var __vue_render__$2 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c(
+    "div",
+    {
+      class: [
+        "desc-list",
+        _vm.size,
+        _vm.layout === "vertical" ? "vertical" : "horizontal"
+      ]
+    },
+    [
+      _vm.title
+        ? _c("div", { staticClass: "title" }, [_vm._v(_vm._s(_vm.title))])
+        : _vm._e(),
+      _vm._v(" "),
+      _c("a-row", [_vm._t("default")], 2)
+    ],
+    1
+  )
+};
+var __vue_staticRenderFns__$2 = [];
+__vue_render__$2._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$3 = undefined;
+  /* scoped */
+  const __vue_scope_id__$3 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$3 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$3 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$3 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$2, staticRenderFns: __vue_staticRenderFns__$2 },
+    __vue_inject_styles__$3,
+    __vue_script__$3,
+    __vue_scope_id__$3,
+    __vue_is_functional_template__$3,
+    __vue_module_identifier__$3,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+const ZkDescList = __vue_component__$3;
+const ZkDescItem = __vue_component__$3.Item;
+
+export { InputTypeEnum, index as ZkBasicLayout, __vue_component__$1 as ZkBtn, ZkDescItem, ZkDescList, __vue_component__ as ZkList, __vue_component__$2 as ZkModal, ZkSelect };

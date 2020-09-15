@@ -55,3 +55,110 @@
 .head-right-content-dropdown .ant-dropdown-menu-item {
   min-width: 160px;
 }
+
+.desc-list .title {
+  color: rgba(0, 0, 0, 0.85);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 16px;
+}
+.desc-list .term {
+  color: rgba(0, 0, 0, 0.85);
+  display: table-cell;
+  line-height: 20px;
+  vertical-align: middle;
+  padding-bottom: 16px;
+  white-space: nowrap;
+  text-align: right;
+}
+.desc-list .term:not(:empty):after {
+  content: ":";
+  margin: 0 8px 0 2px;
+  position: relative;
+  top: -0.5px;
+}
+.desc-list .content-tag {
+  color: rgba(0, 0, 0, 0.65);
+  display: table-cell;
+  min-height: 22px;
+  line-height: 22px;
+  padding-bottom: 16px;
+  margin-top: 0;
+}
+.desc-list .content-tag:empty {
+  content: " ";
+  height: 38px;
+  padding-bottom: 16px;
+}
+.desc-list.small .title {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.65);
+  font-weight: normal;
+  margin-bottom: 12px;
+}
+.desc-list.small .term, .desc-list.small .content-tag {
+  padding-bottom: 8px;
+}
+.desc-list.large .term, .desc-list.large .content-tag {
+  padding-bottom: 16px;
+}
+.desc-list.large .title {
+  font-size: 16px;
+}
+.desc-list.vertical .term {
+  padding-bottom: 8px;
+}
+.desc-list.vertical .term, .desc-list.vertical .content-tag {
+  display: block;
+}
+
+.zk-modal .ant-drawer-body{
+        height: calc( 100% - 55px);
+        overflow: auto;
+        padding-bottom: 64px;
+}
+
+.zk-list .table-alert {
+        margin-bottom: 16px;
+    }
+    .zk-list .table-page-search-wrapper .ant-form-inline .ant-form-item {
+                display: flex;
+                margin-bottom: 24px;
+                margin-right: 0;
+            }
+    .zk-list .table-page-search-wrapper .ant-form-inline .ant-form-item .ant-form-item-control-wrapper {
+                    flex: 1 1;
+                    display: inline-block;
+                    vertical-align: middle;
+                }
+    .zk-list .table-page-search-wrapper .ant-form-inline .ant-form-item >.ant-form-item-label {
+                    line-height: 32px;
+                    padding-right: 8px;
+                    width: auto;
+                }
+    .zk-list .table-page-search-wrapper .ant-form-inline .ant-form-item .ant-form-item-control {
+                    height: 32px;
+                    line-height: 32px;
+                }
+    .zk-list .table-page-search-wrapper .table-page-search-submitButtons {
+            display: block;
+            margin-bottom: 24px;
+            white-space: nowrap;
+        }
+    .zk-list .table-operator {
+        margin-bottom: 18px;
+    }
+    .zk-list .table-operator button {
+            margin-right: 8px;
+        }
+    .zk-list .ant-btn,
+    .zk-list .ant-input,
+    .zk-list .ant-input-number {
+        border-radius: 2px;
+    }
+    .zk-list .title {
+        font-size: 16px;
+        font-weight: 500;
+        color: rgba(0,0,0,.85);
+        margin-bottom:16px;
+    }
