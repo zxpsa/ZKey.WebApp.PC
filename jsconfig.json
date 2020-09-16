@@ -3,7 +3,9 @@
     "target": "es6",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/layouts": ["src/libs/ant-design-vue-pro-3/*"]
+      // "@/*": ["src/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

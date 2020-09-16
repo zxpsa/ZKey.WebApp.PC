@@ -1,4 +1,4 @@
-import ProLayout, { SettingDrawer, GlobalFooter } from '@ant-design-vue/pro-layout';
+import ProLayout, { SettingDrawer, GlobalFooter, PageHeaderWrapper } from '@ant-design-vue/pro-layout';
 import { Icon, Menu, Dropdown, Select, Table, Col, Row } from 'ant-design-vue';
 
 /**
@@ -1625,35 +1625,24 @@ var STable = {
   }
 };
 
-const InputTypeEnum = {
-    /** 简单时间选择 */
-    TIME:15,
-    SWITCH:1,
-    DATE:2,
-    /** 定义单行的输入字段，用户可在其中输入文本。默认宽度为 20 个字符。 */
-    TEXT:3,
-    DATE_TIME:4,
-    PERCENTAGE_SLIDER:5,
-    SELECT:6,
-    // button	定义可点击按钮（多数情况下，用于通过 JavaScript 启动脚本）。
-    /** 定义复选框。 */
-    CHECKBOX:7,
-    /** 定义输入字段和 "浏览"按钮，供文件上传。 */	
-    FILE:8,
-    /** 定义图像形式的提交按钮。 */
-    IMAGE:9,
-    /** 定义密码字段。该字段中的字符被掩码。 */	
-    PASSWORD:10,
-    /** 定义单选按钮。 */
-    RADIO:11,
-    /** 定义重置按钮。重置按钮会清除表单中的所有数据。 */	
-    RESET:12,	
-    /** 定义提交按钮。提交按钮会把表单数据发送到服务器。 */
-    SUBMIT:13,
-    NUMBER:14
-};
-
-// enum ModalWidth.xs sm m l xl
+var InputTypeEnum;
+(function (InputTypeEnum) {
+    InputTypeEnum[InputTypeEnum["TIME"] = 0] = "TIME";
+    InputTypeEnum[InputTypeEnum["SWITCH"] = 1] = "SWITCH";
+    InputTypeEnum[InputTypeEnum["DATE"] = 2] = "DATE";
+    InputTypeEnum[InputTypeEnum["TEXT"] = 3] = "TEXT";
+    InputTypeEnum[InputTypeEnum["DATE_TIME"] = 4] = "DATE_TIME";
+    InputTypeEnum[InputTypeEnum["PERCENTAGE_SLIDER"] = 5] = "PERCENTAGE_SLIDER";
+    InputTypeEnum[InputTypeEnum["SELECT"] = 6] = "SELECT";
+    InputTypeEnum[InputTypeEnum["CHECKBOX"] = 7] = "CHECKBOX";
+    InputTypeEnum[InputTypeEnum["FILE"] = 8] = "FILE";
+    InputTypeEnum[InputTypeEnum["IMAGE"] = 9] = "IMAGE";
+    InputTypeEnum[InputTypeEnum["PASSWORD"] = 10] = "PASSWORD";
+    InputTypeEnum[InputTypeEnum["RADIO"] = 11] = "RADIO";
+    InputTypeEnum[InputTypeEnum["RESET"] = 12] = "RESET";
+    InputTypeEnum[InputTypeEnum["SUBMIT"] = 13] = "SUBMIT";
+    InputTypeEnum[InputTypeEnum["NUMBER"] = 14] = "NUMBER";
+})(InputTypeEnum || (InputTypeEnum = {}));
 
 //
 var script = {
@@ -2573,4 +2562,172 @@ __vue_render__$2._withStripped = true;
 const ZkDescList = __vue_component__$3;
 const ZkDescItem = __vue_component__$3.Item;
 
-export { InputTypeEnum, index as ZkBasicLayout, __vue_component__$1 as ZkBtn, ZkDescItem, ZkDescList, __vue_component__ as ZkList, __vue_component__$2 as ZkModal, ZkSelect };
+//
+//
+//
+//
+//
+//
+
+
+var script$4 = {
+  name: 'BlankLayout'
+};
+
+/* script */
+const __vue_script__$4 = script$4;
+/* template */
+var __vue_render__$3 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("div", [_c("router-view")], 1)
+};
+var __vue_staticRenderFns__$3 = [];
+__vue_render__$3._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$4 = undefined;
+  /* scoped */
+  const __vue_scope_id__$4 = "data-v-8f64d25e";
+  /* module identifier */
+  const __vue_module_identifier__$4 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$4 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$4 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$3, staticRenderFns: __vue_staticRenderFns__$3 },
+    __vue_inject_styles__$4,
+    __vue_script__$4,
+    __vue_scope_id__$4,
+    __vue_is_functional_template__$4,
+    __vue_module_identifier__$4,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+//
+var script$5 = {
+  name: 'PageView',
+  components:{
+    PageHeaderWrapper
+  }
+};
+
+/* script */
+const __vue_script__$5 = script$5;
+
+/* template */
+var __vue_render__$4 = function() {
+  var _vm = this;
+  var _h = _vm.$createElement;
+  var _c = _vm._self._c || _h;
+  return _c("page-header-wrapper", [_c("router-view")], 1)
+};
+var __vue_staticRenderFns__$4 = [];
+__vue_render__$4._withStripped = true;
+
+  /* style */
+  const __vue_inject_styles__$5 = undefined;
+  /* scoped */
+  const __vue_scope_id__$5 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$5 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$5 = false;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$5 = /*#__PURE__*/normalizeComponent(
+    { render: __vue_render__$4, staticRenderFns: __vue_staticRenderFns__$4 },
+    __vue_inject_styles__$5,
+    __vue_script__$5,
+    __vue_scope_id__$5,
+    __vue_is_functional_template__$5,
+    __vue_module_identifier__$5,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+var script$6 = {
+  name: 'RouteView',
+  props: {
+    keepAlive: {
+      type: Boolean,
+      default: true
+    }
+  },
+  data () {
+    return {}
+  },
+  render () {
+    const { $route: { meta }, $store: { getters } } = this;
+    const inKeep = (
+      <keep-alive>
+        <router-view />
+      </keep-alive>
+    );
+    const notKeep = (
+      <router-view />
+    );
+    // 这里增加了 multiTab 的判断，当开启了 multiTab 时
+    // 应当全部组件皆缓存，否则会导致切换页面后页面还原成原始状态
+    // 若确实不需要，可改为 return meta.keepAlive ? inKeep : notKeep
+    if (!getters.multiTab && !meta.keepAlive) {
+      return notKeep
+    }
+    return this.keepAlive || getters.multiTab || meta.keepAlive ? inKeep : notKeep
+  }
+};
+
+/* script */
+const __vue_script__$6 = script$6;
+
+/* template */
+
+  /* style */
+  const __vue_inject_styles__$6 = undefined;
+  /* scoped */
+  const __vue_scope_id__$6 = undefined;
+  /* module identifier */
+  const __vue_module_identifier__$6 = undefined;
+  /* functional template */
+  const __vue_is_functional_template__$6 = undefined;
+  /* style inject */
+  
+  /* style inject SSR */
+  
+  /* style inject shadow dom */
+  
+
+  
+  const __vue_component__$6 = /*#__PURE__*/normalizeComponent(
+    {},
+    __vue_inject_styles__$6,
+    __vue_script__$6,
+    __vue_scope_id__$6,
+    __vue_is_functional_template__$6,
+    __vue_module_identifier__$6,
+    false,
+    undefined,
+    undefined,
+    undefined
+  );
+
+export { __vue_component__$4 as BlankLayout, InputTypeEnum, __vue_component__$5 as PageView, __vue_component__$6 as RouteView, index as ZkBasicLayout, __vue_component__$1 as ZkBtn, ZkDescItem, ZkDescList, __vue_component__ as ZkList, __vue_component__$2 as ZkModal, ZkSelect };

@@ -1,41 +1,44 @@
-// import typescript from '@rollup/plugin-typescript';
-// import jsx from 'acorn-jsx';
-// import resolve from '@rollup/plugin-node-resolve';
-// import commonjsPlugin from 'rollup-plugin-commonjs';
-// import postcss from 'rollup-plugin-postcss';
-// // import copy from 'rollup-plugin-copy';
-// // PostCSS plugins
-// import simplevars from 'postcss-simple-vars';
-// import nested from 'postcss-nested';
-// import csspreset from 'postcss-preset-env';
-// import cssnano from 'cssnano';
-// import vuePlugin from 'rollup-plugin-vue';
-// import replace from '@rollup/plugin-replace';
-// import { terser } from 'rollup-plugin-terser';
-// import url from "@rollup/plugin-url";
-// // import less from "rollup-plugin-less";
-// import styles from "rollup-plugin-styles";
-// import path from 'path';
-// import alias from '@rollup/plugin-alias';
-// import json from '@rollup/plugin-json'
-// import replace from '@rollup/plugin-replace';
-const replace = require('@rollup/plugin-replace');
-const typescript = require('@rollup/plugin-typescript');
-const jsx = require('acorn-jsx');
-const resolve = require('@rollup/plugin-node-resolve').default;
-const commonjsPlugin = require('rollup-plugin-commonjs');
-const postcss = require('rollup-plugin-postcss');
-const simplevars = require('postcss-simple-vars');
-const nested = require('postcss-nested');
-const csspreset = require('postcss-preset-env');
-const cssnano = require('cssnano');
-const vuePlugin = require('rollup-plugin-vue');
-const { terser } = require('rollup-plugin-terser');
-const url = require('@rollup/plugin-url');
-const path = require('path');
-const alias = require('@rollup/plugin-alias');
-const json = require('@rollup/plugin-json');
-const styles = require("rollup-plugin-styles");
+import typescript from '@rollup/plugin-typescript';
+// import typescript from 'rollup-plugin-typescript2';
+
+import jsx from 'acorn-jsx';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjsPlugin from 'rollup-plugin-commonjs';
+import postcss from 'rollup-plugin-postcss';
+// import copy from 'rollup-plugin-copy';
+// PostCSS plugins
+import simplevars from 'postcss-simple-vars';
+import nested from 'postcss-nested';
+import csspreset from 'postcss-preset-env';
+import cssnano from 'cssnano';
+import vuePlugin from 'rollup-plugin-vue';
+import replace from '@rollup/plugin-replace';
+import { terser } from 'rollup-plugin-terser';
+import url from "@rollup/plugin-url";
+// import less from "rollup-plugin-less";
+import styles from "rollup-plugin-styles";
+import path from 'path';
+import alias from '@rollup/plugin-alias';
+import json from '@rollup/plugin-json'
+
+// const replace = require('@rollup/plugin-replace');
+// const typescript = require('@rollup/plugin-typescript');
+// const typescript = require('rollup-plugin-typescript2');
+// const jsx = require('acorn-jsx');
+// const resolve = require('@rollup/plugin-node-resolve').default;
+// const commonjsPlugin = require('rollup-plugin-commonjs');
+// const postcss = require('rollup-plugin-postcss');
+// const simplevars = require('postcss-simple-vars');
+// const nested = require('postcss-nested');
+// const csspreset = require('postcss-preset-env');
+// const cssnano = require('cssnano');
+// const vuePlugin = require('rollup-plugin-vue');
+// const { terser } = require('rollup-plugin-terser');
+// const url = require('@rollup/plugin-url');
+// const path = require('path');
+// const alias = require('@rollup/plugin-alias');
+// const json = require('@rollup/plugin-json');
+// const styles = require("rollup-plugin-styles");
 
 /**
  * 
@@ -85,7 +88,8 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             alias({
                 entries: [
                     { find: '@/components', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/components') },
-                    { find: '@/layouts', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/layouts') },
+                    { find: '@/layouts', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/layouts/') },
+                    
                 ]
             }),
             // alias({
@@ -98,7 +102,8 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 limit: 10 * 1024, // inline files < 10k, copy files > 10k
             }),
             typescript({
-                include:[ '*.ts+(|x)', '**/*.ts+(|x),','**/*.js+(|x),' ],
+                // include:[ '*.ts+(|x)', '**/*.ts+(|x),','**/*.js+(|x),' ],
+                // include:[ '**.ts+(|x)', '**/*.ts+(|x),','**/*.js+(|x),' ],
                 exclude:[
                     'src/**.png'
                 ],
@@ -107,7 +112,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 // experimentalDecorators: true,
                 lib: ["es5", "es6", "dom", "es7", "es2015.promise"],
                 target,
-                allowJs: true,
+                allowJs: false,
                 importHelpers: true,
                 removeComments:true,
                 jsx:"preserve",
