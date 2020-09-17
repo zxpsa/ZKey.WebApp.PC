@@ -1,5 +1,5 @@
 {
-  "name": "zkey.webapp.pc",
+  "name": "@zkey-webapp/pc",
   "version": "1.0.0",
   "description": "",
   "main": "dist/index.esm.js",

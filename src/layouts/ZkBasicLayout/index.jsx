@@ -8,7 +8,24 @@ import './index.less';
 import '@/components/SelectLang/index.less';
 
 const props = {
-    /** 导航菜单 */
+    /** 
+     * 导航菜单 
+     * [{
+            name: 'index1',
+            path: '/dashboard',
+            meta: { title: '首页1', icon: 'dashboard' },
+            children: [
+                {
+                    name: 'index12',
+                    path: '/dashboard1',
+                    meta: {
+                        title: '首页12',
+                        icon: 'dashboard'
+                    }
+                }
+            ]
+        }]
+     */
     navMenus: {
         type: Array,
         default: () => []

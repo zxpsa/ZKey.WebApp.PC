@@ -23,22 +23,6 @@
   top: -1px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
@@ -70,6 +54,29 @@
 }
 .head-right-content-dropdown .ant-dropdown-menu-item {
   min-width: 160px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.zk-modal .ant-drawer-body{
+        height: calc( 100% - 55px);
+        overflow: auto;
+        padding-bottom: 64px;
 }
 
 .desc-list .title {
@@ -127,13 +134,6 @@
 .desc-list.vertical .term, .desc-list.vertical .content-tag {
   display: block;
 }
-
-.zk-modal .ant-drawer-body{
-        height: calc( 100% - 55px);
-        overflow: auto;
-        padding-bottom: 64px;
-}
-
 .zk-list .table-alert {
         margin-bottom: 16px;
     }
@@ -178,5 +178,3 @@
         color: rgba(0,0,0,.85);
         margin-bottom:16px;
     }
-
-/* Make clicks pass-through */
