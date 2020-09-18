@@ -19,7 +19,9 @@ import url from "@rollup/plugin-url";
 import styles from "rollup-plugin-styles";
 import path from 'path';
 import alias from '@rollup/plugin-alias';
-import json from '@rollup/plugin-json'
+import json from '@rollup/plugin-json';
+import lessTildeImporter from '@ovh-ux/rollup-plugin-less-tilde-importer';
+
 
 // const replace = require('@rollup/plugin-replace');
 // const typescript = require('@rollup/plugin-typescript');
@@ -89,7 +91,8 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 entries: [
                     { find: '@/components', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/components') },
                     { find: '@/layouts', replacement: path.resolve(__dirname,'./src/libs/ant-design-vue-pro-3/src/layouts/') },
-                    
+                    { find: '~ant-design-vue', replacement: path.resolve(__dirname,'./node_modules/ant-design-vue') },
+                    { find: '@ant-design-vue/pro-layout', replacement: path.resolve(__dirname,'./node_modules/@ant-design-vue/pro-layout/es') },
                 ]
             }),
             // alias({
@@ -120,7 +123,7 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
                 module: "esnext",
                 // module: 'CommonJS',
                 preserveConstEnums:false,
-                // moduleResolution:'node',
+                moduleResolution:'classic',
                 // outDir: path.resolve(__dirname,'./jsSrc'),
             }),
             resolve({ extensions: ['.mjs', '.js', '.jsx', '.json', '.ts','.vue','.png','.less','.tsx'] }),
@@ -164,6 +167,12 @@ function createConfig({format = 'esm',target = 'esnext',compress = false,extract
             //         javascriptEnabled: true
             //     }
             // }),
+            lessTildeImporter({
+                paths: [
+                  path.resolve(__dirname, './node_modules'),
+                //   path.resolve(__dirname, '../../node_modules'),
+                ],
+            }),
             postcss({
                 name:'index.css',
                 include: ['node_modules/**','libs/**','src/**', 'test/**'],
